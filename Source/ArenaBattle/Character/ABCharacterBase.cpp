@@ -2,6 +2,7 @@
 
 #include "Character/ABCharacterBase.h"
 
+#include "ABCharacterControlData.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -44,4 +45,29 @@ AABCharacterBase::AABCharacterBase()
 	{
 		GetMesh()->SetAnimInstanceClass(AnimInstanceClassRef.Class);
 	}
+
+	static ConstructorHelpers::FObjectFinder<UABCharacterControlData> ShoulderDataRef(
+		TEXT("/Script/ArenaBattle.ABCharacterControlData'/Game/ArenaBattle/CharacterControl/ABC_Shoulder.ABC_Shoulder'"));
+	if (ShoulderDataRef.Object)
+	{
+		CharacterControlManager.Add(ECharacterControlType::Shoulder, ShoulderDataRef.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UABCharacterControlData> QuaterDataRef(
+		TEXT("/Script/ArenaBattle.ABCharacterControlData'/Game/ArenaBattle/CharacterControl/ABC_Quater.ABC_Quater'"));
+	if (QuaterDataRef.Object)
+	{
+		CharacterControlManager.Add(ECharacterControlType::Quater, QuaterDataRef.Object);
+	}
+}
+
+void AABCharacterBase::SetCharacterControlData(const UABCharacterControlData* CharacterControlData)
+{
+	// Pawn
+	bUseControllerRotationYaw = CharacterControlData->bUseControllerRotationYaw;
+
+	// CharacterMovement
+	GetCharacterMovement()->bOrientRotationToMovement = CharacterControlData->bOrientRotationToMovement;
+	GetCharacterMovement()->bUseControllerDesiredRotation = CharacterControlData->bUseControllerDesiredRotation;
+	GetCharacterMovement()->RotationRate = CharacterControlData->RotationRate;
 }
