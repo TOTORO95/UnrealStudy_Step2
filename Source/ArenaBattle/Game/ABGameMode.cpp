@@ -6,29 +6,33 @@
 
 AABGameMode::AABGameMode()
 {
+	// 생성자이기 때문에 ConstructorHelpers 필요
+	// static ConstructorHelpers::FClassFinder<APawn> ThirdPersonClassRef(*CharacterResourcePath);
+	// if (ThirdPersonClassRef.Class)
+	//{
+	//	DefaultPawnClass = ThirdPersonClassRef.Class;
+	//}
+	// else
+	//{
+	//	UE_LOG(LogTemp, Log, TEXT("Not Found ThirdEPrson Object!! Path = %s"), *CharacterResourcePath);
+	//}
+
 	// /Script/Engine.Blueprint'/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter' 에서 아래로 수정
 	// /Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter_C <- _C는 클래스 정보를 가져오기 위해 추가
-	FString CharacterResourcePath = TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter_C");	
+	FString CharacterResourcePath = TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter_C");
 
-	// 생성자이기 때문에 ConstructorHelpers 필요
-	static ConstructorHelpers::FClassFinder<APawn> ThirdPersonClassRef(*CharacterResourcePath);
-	if (ThirdPersonClassRef.Class)
+	static ConstructorHelpers::FClassFinder<APawn> DefaultPawnClassRef(TEXT("/Script/ArenaBattle.ABCharacterPlayer"));
+	if (DefaultPawnClassRef.Class)
 	{
-		DefaultPawnClass = ThirdPersonClassRef.Class;
-	}
-	else
-	{
-		UE_LOG(LogTemp, Log, TEXT("Not Found ThirdEPrson Object!! Path = %s"), *CharacterResourcePath);
+		DefaultPawnClass = DefaultPawnClassRef.Class;
 	}
 
 	PlayerControllerClass = AABPlayerController::StaticClass();
 
-	///Script/CoreUObject.Class'/Script/ArenaBattle.ABPlayerController'
-	//static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerClassRef(TEXT("/Script/ArenaBattle.ABPlayerController_C"));
-	//if (PlayerControllerClassRef.Class)
+	/// Script/CoreUObject.Class'/Script/ArenaBattle.ABPlayerController'
+	// static ConstructorHelpers::FClassFinder<APlayerController>
+	// PlayerControllerClassRef(TEXT("/Script/ArenaBattle.ABPlayerController_C")); if (PlayerControllerClassRef.Class)
 	//{
 	//	PlayerControllerClass = PlayerControllerClassRef.Class;
-	//}
-
-
+	// }
 }
