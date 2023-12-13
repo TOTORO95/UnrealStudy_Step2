@@ -2,22 +2,22 @@
 
 #pragma once
 
-#include "Character/ABCharacterBase.h"
 #include "CoreMinimal.h"
-
+#include "Character/ABCharacterBase.h"
 #include "ABCharacterNonPlayer.generated.h"
 
 /**
- *
+ * 
  */
 UCLASS()
 class ARENABATTLE_API AABCharacterNonPlayer : public AABCharacterBase
 {
 	GENERATED_BODY()
-
+	
 public:
 	AABCharacterNonPlayer();
 
 protected:
-	virtual void SetDead() override;
+	void SetDead() override;
+	
 };

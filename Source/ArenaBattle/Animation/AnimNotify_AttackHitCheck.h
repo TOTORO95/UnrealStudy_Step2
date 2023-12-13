@@ -13,6 +13,8 @@ UCLASS()
 class ARENABATTLE_API UAnimNotify_AttackHitCheck : public UAnimNotify
 {
 	GENERATED_BODY()
-	virtual void Notify(
-		USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
+	
+protected:
+	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
+	
 };

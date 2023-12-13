@@ -4,10 +4,9 @@
 #include "Animation/AnimNotify_AttackHitCheck.h"
 #include "Interface/ABAnimationAttackInterface.h"
 
-void UAnimNotify_AttackHitCheck::Notify(
-	USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
+void UAnimNotify_AttackHitCheck::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
-	Super::Notify(MeshComp,Animation,EventReference);
+	Super::Notify(MeshComp, Animation, EventReference);
 
 	if (MeshComp)
 	{
@@ -17,5 +16,4 @@ void UAnimNotify_AttackHitCheck::Notify(
 			AttackPawn->AttackHitCheck();
 		}
 	}
-
 }

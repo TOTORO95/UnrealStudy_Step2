@@ -5,7 +5,6 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-
 UABAnimInstance::UABAnimInstance()
 {
 	MovingThreshould = 3.0f;
@@ -15,6 +14,7 @@ UABAnimInstance::UABAnimInstance()
 void UABAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
+
 	Owner = Cast<ACharacter>(GetOwningActor());
 	if (Owner)
 	{
@@ -25,12 +25,13 @@ void UABAnimInstance::NativeInitializeAnimation()
 void UABAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
+
 	if (Movement)
 	{
 		Velocity = Movement->Velocity;
-		GoundSpeed = Velocity.Size2D();
-		bIsIdle = GoundSpeed <MovingThreshould;
-		bISFalling = Movement->IsFalling();
-		bIsJumping = bISFalling & (Velocity.Z > JumpingThreshould);
+		GroundSpeed = Velocity.Size2D();
+		bIsIdle = GroundSpeed < MovingThreshould;
+		bIsFalling = Movement->IsFalling();
+		bIsJumping = bIsFalling & (Velocity.Z > JumpingThreshould);
 	}
 }

@@ -23,10 +23,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Category= Mesh경우 UHT에의해 자동으로 매쉬 카테고리에 Body에 대한 값을 편집가능하게 된다
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh);
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh)
 	TObjectPtr<class UStaticMeshComponent> Body;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh);
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh)
 	TObjectPtr<class UStaticMeshComponent> Water;
+
 };
