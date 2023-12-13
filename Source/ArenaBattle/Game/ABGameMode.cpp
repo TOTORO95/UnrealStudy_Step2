@@ -19,9 +19,10 @@ AABGameMode::AABGameMode()
 
 	// /Script/Engine.Blueprint'/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter' 에서 아래로 수정
 	// /Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter_C <- _C는 클래스 정보를 가져오기 위해 추가
-	FString CharacterResourcePath = TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter_C");
+	FString CharacterResourcePath =
+		TEXT("/Script/Engine.Blueprint'/Game/ArenaBattle/Blueprint/BP_ABCharacterPlayer.BP_ABCharacterPlayer_C'");
 
-	static ConstructorHelpers::FClassFinder<APawn> DefaultPawnClassRef(TEXT("/Script/ArenaBattle.ABCharacterPlayer"));
+	static ConstructorHelpers::FClassFinder<APawn> DefaultPawnClassRef(*CharacterResourcePath);
 	if (DefaultPawnClassRef.Class)
 	{
 		DefaultPawnClass = DefaultPawnClassRef.Class;
@@ -29,10 +30,11 @@ AABGameMode::AABGameMode()
 
 	PlayerControllerClass = AABPlayerController::StaticClass();
 
-	/// Script/CoreUObject.Class'/Script/ArenaBattle.ABPlayerController'
-	// static ConstructorHelpers::FClassFinder<APlayerController>
-	// PlayerControllerClassRef(TEXT("/Script/ArenaBattle.ABPlayerController_C")); if (PlayerControllerClassRef.Class)
-	//{
-	//	PlayerControllerClass = PlayerControllerClassRef.Class;
-	// }
+	// Script/CoreUObject.Class'/Script/ArenaBattle.ABPlayerController'
+	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerClassRef(
+		TEXT("/Script/ArenaBattle.ABPlayerController_C"));
+	if (PlayerControllerClassRef.Class)
+	{
+		PlayerControllerClass = PlayerControllerClassRef.Class;
+	}
 }
