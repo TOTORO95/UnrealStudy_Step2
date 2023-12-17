@@ -4,17 +4,25 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
 #include "ABItemBox.generated.h"
 
 UCLASS()
 class ARENABATTLE_API AABItemBox : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AABItemBox();
+	FORCEINLINE class UBoxComponent* GetTrigger()
+	{
+		return Trigger;
+	}
 
+protected:
+	virtual void PostInitializeComponents()override;
+	
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Box)
 	TObjectPtr<class UBoxComponent> Trigger;

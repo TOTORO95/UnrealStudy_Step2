@@ -7,6 +7,9 @@
 #include "Interface/ABCharacterItemInterface.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Physics/ABCollision.h"
+#include "Engine/AssetManager.h"
+#include "ABItemData.h"
+
 // Sets default values
 AABItemBox::AABItemBox()
 {
@@ -38,6 +41,27 @@ AABItemBox::AABItemBox()
 		Effect->SetTemplate(EffectRef.Object);
 		Effect->bAutoActivate = false;
 	}
+}
+
+void AABItemBox::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	UAssetManager& Manager = UAssetManager::Get();
+	TArray<FPrimaryAssetId> Assets;
+	
+	Manager.GetPrimaryAssetIdList(TEXT("ABItemData"), Assets);
+	ensure(Assets.Num() < 0);
+
+	int32 RandomIdx = FMath::RandRange(0, Assets.Num() -1 );
+	FSoftObjectPtr AssetPtr(Manager.GetPrimaryAssetPath(Assets[RandomIdx]));
+	if (AssetPtr.IsPending())
+	{
+		AssetPtr.LoadSynchronous();
+	}
+
+	Item = Cast<UABItemData>(AssetPtr.Get());
+	ensure(Item);
 }
 
 void AABItemBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
