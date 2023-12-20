@@ -46,6 +46,11 @@ public:
 	{
 		return CurrentHp;
 	}
+	FORCEINLINE float GetAttackRadius() const
+	{
+		return AttackRadius;
+	}
+
 	float ApplyDamage(float InDamage);
 
 protected:
@@ -54,8 +59,11 @@ protected:
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
 	float CurrentHp;
 
-	UPROPERTY(VisibleInstanceOnly, Category = Stat)
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
 	float CurrentLevel;
+
+	UPROPERTY(VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	float AttackRadius;
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess= "true"))
 	FABCharacterStat BaseStat;

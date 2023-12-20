@@ -2,18 +2,19 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "ABAI.h"
 #include "AIController.h"
-#include "ABAIController.generated.h"
+#include "CoreMinimal.h"
 
+#include "ABAIController.generated.h"
 /**
- * 
+ *
  */
 UCLASS()
 class ARENABATTLE_API AABAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
 public:
 	AABAIController();
 	void RunAI();
@@ -25,8 +26,7 @@ protected:
 private:
 	UPROPERTY()
 	TObjectPtr<class UBlackboardData> BBAsset;
-	
+
 	UPROPERTY()
 	TObjectPtr<class UBehaviorTree> BTAsset;
-
 };

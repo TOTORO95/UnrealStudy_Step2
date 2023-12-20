@@ -65,6 +65,7 @@ protected:
 
 	void ComboActionBegin();
 	void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsProperlyEnded);
+	virtual void NotifiComboActionEnd();
 	void SetComboCheckTimer();
 	void ComboCheck();
 
