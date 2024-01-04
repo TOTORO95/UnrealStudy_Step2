@@ -1,29 +1,33 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "CharacterStat/ABCharacterStatComponent.h"
+
 #include "GameData/ABGameSingleton.h"
 // Sets default values for this component's properties
 UABCharacterStatComponent::UABCharacterStatComponent()
 {
 	CurrentLevel = 1;
 	AttackRadius = 50.0f;
+	bWantsInitializeComponent = true;
 }
 
-
-// Called when the game starts
-void UABCharacterStatComponent::BeginPlay()
+void UABCharacterStatComponent::InitializeComponent()
 {
-	Super::BeginPlay();
+	/*
+		InitializeComponent의 경우 bWantsInitializeComponent = true 로 넣어줘야 실행가능
+	*/
+
+	Super::InitializeComponent();
 	SetLevelStat(CurrentLevel);
-	SetHp(BaseStat.MaxHp);	
+	SetHp(BaseStat.MaxHp);
 }
 
 void UABCharacterStatComponent::SetLevelStat(int32 InNewLevel)
 {
 	CurrentLevel = FMath::Clamp(InNewLevel, 1, UABGameSingleton::Get().CharacterMaxLevel);
-	BaseStat = UABGameSingleton::Get().GetCharacterStat(CurrentLevel);
-	check(BaseStat.MaxHp >  0.0f);
+	SetBaseStat(UABGameSingleton::Get().GetCharacterStat(CurrentLevel));
+	
+	check(GetBaseStat().MaxHp > 0.0f);
 }
 
 float UABCharacterStatComponent::ApplyDamage(float InDamage)
@@ -43,7 +47,6 @@ float UABCharacterStatComponent::ApplyDamage(float InDamage)
 void UABCharacterStatComponent::SetHp(float NewHp)
 {
 	CurrentHp = FMath::Clamp<float>(NewHp, 0.0f, BaseStat.MaxHp);
-	
+
 	OnHpChanged.Broadcast(CurrentHp);
 }
-
