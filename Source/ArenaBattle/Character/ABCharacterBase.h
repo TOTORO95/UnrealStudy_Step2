@@ -7,11 +7,10 @@
 #include "Interface/ABAnimationAttackInterface.h"
 #include "Interface/ABCharacterItemInterface.h"
 #include "Interface/ABCharacterWidgetInterface.h"
-
+#include "GameData/ABCharacterStat.h"
 #include "ABCharacterBase.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogABCharacter, Log, All);
-
 
 UENUM()
 enum class ECharacterControlType : uint8
@@ -28,8 +27,12 @@ struct FOnTakeItemDelegateWrapper
 {
 	GENERATED_BODY()
 
-	FOnTakeItemDelegateWrapper() {}
-	FOnTakeItemDelegateWrapper(const FOnTakeItemDelegate& InItemDelegate) : ItemDelegate(InItemDelegate) {}
+	FOnTakeItemDelegateWrapper()
+	{
+	}
+	FOnTakeItemDelegateWrapper(const FOnTakeItemDelegate& InItemDelegate) : ItemDelegate(InItemDelegate)
+	{
+	}
 	FOnTakeItemDelegate ItemDelegate;
 };
 

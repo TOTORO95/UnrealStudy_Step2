@@ -10,7 +10,8 @@
 
 DECLARE_MULTICAST_DELEGATE(FOnHpZeroDelegate);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHpChangedDelegate, float /*CurrentHp*/);
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnStatChangedDelegate, const FABCharacterStat& /*BaseStat*/, const FABCharacterStat& /*ModifierStat*/);
+DECLARE_MULTICAST_DELEGATE_TwoParams(
+	FOnStatChangedDelegate, const FABCharacterStat& /*BaseStat*/, const FABCharacterStat& /*ModifierStat*/);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ARENABATTLE_API UABCharacterStatComponent : public UActorComponent
@@ -34,15 +35,21 @@ public:
 	{
 		return CurrentLevel;
 	}
+	FORCEINLINE void AddBaseStat(const FABCharacterStat& InAddBaseStat)
+	{
+		BaseStat = BaseStat + InAddBaseStat;
+		OnStatChanged.Broadcast(GetBaseStat(), GetModifierStat());
+	}
+
 	FORCEINLINE void SetBaseStat(const FABCharacterStat& InBaseStat)
 	{
 		BaseStat = InBaseStat;
-		OnStatChanged.Broadcast(BaseStat, ModifierStat);
+		OnStatChanged.Broadcast(GetBaseStat(), GetModifierStat());
 	}
 	FORCEINLINE void SetModifierStat(const FABCharacterStat& InMidifierStat)
 	{
 		ModifierStat = InMidifierStat;
-		OnStatChanged.Broadcast(BaseStat, ModifierStat);
+		OnStatChanged.Broadcast(GetBaseStat(), GetModifierStat());
 	}
 	FORCEINLINE FABCharacterStat GetBaseStat() const
 	{
@@ -60,6 +67,12 @@ public:
 	{
 		return CurrentHp;
 	}
+	FORCEINLINE void HealHP(float InHealAmount)
+	{
+		CurrentHp = FMath::Clamp(CurrentHp + InHealAmount, 0, GetTotalStat().MaxHp);
+		OnHpChanged.Broadcast(CurrentHp);
+	}
+
 	FORCEINLINE float GetAttackRadius() const
 	{
 		return AttackRadius;
