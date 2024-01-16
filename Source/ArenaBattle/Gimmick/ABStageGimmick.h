@@ -65,7 +65,6 @@ protected:
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	// Gate Section
-protected:
 	UPROPERTY(VisibleAnywhere, Category = Gate, Meta = (AllowPrivateAccess = "true"))
 	TMap<FName, TObjectPtr<class UStaticMeshComponent>> Gates;
 

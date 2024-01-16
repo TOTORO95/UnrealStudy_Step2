@@ -9,6 +9,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputMappingContext.h"
+#include "Interface/ABGameInterface.h"
 #include "UI/ABHUDWidget.h"
 
 AABCharacterPlayer::AABCharacterPlayer()
@@ -90,6 +91,11 @@ void AABCharacterPlayer::SetDead()
 	if (PlayerController)
 	{
 		DisableInput(PlayerController);
+		IABGameInterface* ABGameMode = Cast<IABGameInterface>((UObject*)GetWorld()->GetAuthGameMode()); // 멀티네트워크 환경에서 인증받은 게임모드 하나만 가져오기위한함수
+		if (ABGameMode)
+		{
+			ABGameMode->OnPlayerDead();
+		}
 	}
 }
 
